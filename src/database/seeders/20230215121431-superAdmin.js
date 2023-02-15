@@ -7,6 +7,7 @@ module.exports = {
       empCode: 00000,
       fullName: "Super Admin",
       email: "admin@wappnet.com",
+      password:"Admin@Wappnet",
       personalEmail: "admin@admin.com",
       company: "Wappnet Systems",
       department: "MD",

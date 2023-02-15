@@ -6,6 +6,7 @@ interface userAttributes {
   empCode: number
   fullName: string
   email: string
+  password:string
   personalEmail: string
   company: string
   department: string
@@ -30,6 +31,7 @@ class User extends Model<userAttributes, userInput> implements userAttributes {
   public empCode!: number
   public fullName!: string
   public email!: string
+  public password!: string
   public personalEmail!: string
   public company!: string
   public department!: string
@@ -61,6 +63,10 @@ User.init({
   email: {
     allowNull: false,
     type: DataTypes.STRING
+  },
+  password:{
+    allowNull:false,
+    type:DataTypes.STRING
   },
   personalEmail: {
     allowNull: false,
