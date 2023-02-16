@@ -4,6 +4,7 @@ import authRoute from "./routers/authRoute"
 import employeeRoute from "./routers/employeeRoute"
 import "reflect-metadata"
 import departmentRoute from "./routers/departmentRoute"
+import { dbConnection } from "./config/dbConnection"
 
 const app: Express = express()
 config()
@@ -17,6 +18,7 @@ app.use("api/v1/department",departmentRoute)
 
 
 //Todo:databse connection
+dbConnection()
 
 
 app.get("/", (req: Request, res: Response) => {

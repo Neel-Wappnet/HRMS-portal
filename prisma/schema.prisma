@@ -10,54 +10,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Department {
   id       Int    @id @default(autoincrement())
-  empCode  String @db.Char(100)
-  email    String @db.Char(150)
-  password String @db.Char(150)
+  deptName String
+  employee Employee[]
+
+}
+
+model Employee {
+  id Int @id @default(autoincrement()) 
+  empCode String @unique
+  name String
+  email String @unique
+  department Department? @relation(fields: [departmentId],references: [id])
+  departmentId Int?
+  role String
+  designation String
+  birthDate DateTime
+  reportingUser String
+  profileImage String
+  contactNo BigInt
+  address String
+  user User?
+  leaveMaster LeaveMaster?
+  leave Leave[]
+}
+
+model User {
+  id         Int    @id @default(autoincrement())
+  employee   Employee? @relation(fields: [employeeId], references: [id],onDelete: Cascade, onUpdate: Cascade)
+  employeeId Int? @unique
+  email      String
+  password   String
 }
 
 model LeaveMaster {
-  id           Int @id @default(autoincrement())
-  employeeId   Int
+  id Int @id @default(autoincrement())
+  employee Employee? @relation(fields: [employeeId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  employeeId Int? @unique
   leaveBalance Int
 }
 
 model Leave {
-  id          Int      @id @default(autoincrement())
-  empCode     String   @db.Char(100)
-  subject     String   @db.Char(255)
-  startDate   DateTime
-  endDate     DateTime
-  leaveReason String   @db.Char(100)
-  approved    Boolean  @default(false)
+  id Int @id @default(autoincrement())
+  employee Employee? @relation(fields: [employeeId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  employeeId Int?
+  subject String
+  startDate DateTime
+  endDate DateTime
+  leaveReason String
+  approved Boolean
 }
 
 model Holiday {
-  id         Int      @id @default(autoincrement())
-  title      String   @db.Char(40)
-  startDate  DateTime
-  endDate    DateTime
-  isOptional Boolean  @default(false)
-  status     String
+  id Int @id @default(autoincrement())
+  title String
+  startDate DateTime
+  endDate DateTime
+  isOptional Boolean @default(false)
+  status String
 }
 
-model Employee {
-  id            Int      @id @default(autoincrement())
-  empCode       String   @db.Char(100)
-  name          String   @db.Char(70)
-  email         String   @db.Char(150)
-  departmentId  Int
-  role          String
-  designation   String
-  birthDate     DateTime
-  reportingUser String
-  profileImage  String
-  contactNo     Int
-  address       String
-}
-
-model Department {
-  id       Int    @id @default(autoincrement())
-  deptName String @db.Char(70)
-}
