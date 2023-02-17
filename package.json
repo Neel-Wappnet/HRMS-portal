@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "full HRMS portal API in expressjs with typescript",
   "main": "app.js",
+  "prisma": {
+    "seed": "ts-node src/prisma/seeder/seed.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/app.ts",
