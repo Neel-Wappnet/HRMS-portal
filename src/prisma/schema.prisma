@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,63 +8,61 @@ datasource db {
 }
 
 model Department {
-  id       Int    @id @default(autoincrement())
+  id       Int        @id @default(autoincrement())
   deptName String
   employee Employee[]
-
 }
 
 model Employee {
-  id Int @id @default(autoincrement()) 
-  empCode String @unique
-  name String
-  email String @unique
-  department Department? @relation(fields: [departmentId],references: [id])
-  departmentId Int?
-  role String
-  designation String
-  birthDate DateTime
+  id            Int          @id @default(autoincrement())
+  empCode       String       @unique
+  name          String
+  email         String       @unique
+  departmentId  Int?
+  role          String
+  designation   String
+  birthDate     DateTime
   reportingUser String
-  profileImage String
-  contactNo BigInt
-  address String
-  user User?
-  leaveMaster LeaveMaster?
-  leave Leave[]
+  profileImage  String
+  contactNo     BigInt
+  address       String
+  department    Department?  @relation(fields: [departmentId], references: [id])
+  leave         Leave[]
+  leaveMaster   LeaveMaster?
+  user          User?
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
-  employee   Employee? @relation(fields: [employeeId], references: [id],onDelete: Cascade, onUpdate: Cascade)
-  employeeId Int? @unique
-  email      String @unique
+  id         Int       @id @default(autoincrement())
+  employeeId Int?      @unique
+  email      String    @unique
   password   String
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
 
 model LeaveMaster {
-  id Int @id @default(autoincrement())
-  employee Employee? @relation(fields: [employeeId],references: [id],onDelete: Cascade,onUpdate: Cascade)
-  employeeId Int? @unique
+  id           Int       @id @default(autoincrement())
+  employeeId   Int?      @unique
   leaveBalance Int
+  employee     Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
 
 model Leave {
-  id Int @id @default(autoincrement())
-  employee Employee? @relation(fields: [employeeId],references: [id],onDelete: Cascade,onUpdate: Cascade)
-  employeeId Int?
-  subject String
-  startDate DateTime
-  endDate DateTime
+  id          Int       @id @default(autoincrement())
+  employeeId  Int?
+  subject     String
+  startDate   DateTime
+  endDate     DateTime
   leaveReason String
-  approved Boolean
+  approved    Boolean
+  employee    Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
 
 model Holiday {
-  id Int @id @default(autoincrement())
-  title String
-  startDate DateTime
-  endDate DateTime
-  isOptional Boolean @default(false)
-  status String
+  id         Int      @id @default(autoincrement())
+  title      String
+  startDate  DateTime
+  endDate    DateTime
+  isOptional Boolean  @default(false)
+  status     String
 }
-

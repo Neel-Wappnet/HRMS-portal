@@ -17,7 +17,7 @@ app.use("api/v1/department",departmentRoute)
 //Todo:holiday and leave route
 
 
-//Todo:databse connection
+//databse connection
 dbConnection()
 
 
@@ -25,6 +25,8 @@ app.get("/", (req: Request, res: Response) => {
   res.json({msg:"Hello World!"})
 })
 
+//JWT secret
+// console.log(require('crypto').randomBytes(64).toString('hex'))
 
 //app listening
 const PORT = process.env.PORT
