@@ -42,7 +42,9 @@ const authController = {
   },
 
   forgotPassword: async (req: Request, res: Response): Promise<void> => {
-    //Todo:create session and send otp and generate new password
+    
+    
+
   }
 }
 

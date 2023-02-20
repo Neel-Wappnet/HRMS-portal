@@ -1,28 +1,49 @@
-import nodemailer from "nodemailer"
+import * as nodemailer from "nodemailer"
 import { config } from "dotenv"
-
 config()
 
-const sendMail = async () => {
+const sendMail = (receiver: string, subject: string, type: string, email?: string, password?: string, filePath?: string) => {
 
-  const transporter = nodemailer.createTransport({
-    service:"gmail",
+  const transport = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    service: "gmail",
+    port: 465,
+    secure: true,
     auth: {
-      type:"oauth2",
       user: process.env.MAIL_ID,
       pass: process.env.MAIL_PASS
     }
   })
 
-  const info = await transporter.sendMail({
-    from: "'super admin' <admin@admin.com>",
-    to:"<nbamroliya40@gmail.com>",
-    subject:"forgot password",
-    text:"your password reset mail",
-    html: "<h1>this is password reset mail</h1>"
-  })
+  if (type === "login credential") {
+    const mailOptions = {
+      from: process.env.MAIL_ID,
+      to: receiver,
+      subject: subject,
+      html: `<h3>your email is: <b>${email}</b> and password is <b>${password}</b></h3>`
+    }
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(info);
+      }
+    })
+  } else if (type === "forgot password") {
+    const mailOptions = {
+      from: process.env.MAIL_ID,
+      to: receiver,
+      subject: subject,
+      html: { path: filePath }
+    }
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(info);
+      }
+    })
+  }
 
-  console.log(info.messageId,nodemailer.getTestMessageUrl(info))
 }
 
-sendMail()

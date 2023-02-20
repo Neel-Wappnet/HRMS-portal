@@ -4,6 +4,8 @@ import { verifyAccessToken } from "../config/jwtToken";
 
 const router = Router()
 
+//only super admin can add and update it
+
 router.route("/addemployee").post(verifyAccessToken, employeeController.addEmployee)
 router.route("/updateemployee").patch(verifyAccessToken, employeeController.updateEmployee)
 router.route("/deleteemployee").delete(verifyAccessToken, employeeController.deleteEmployee)

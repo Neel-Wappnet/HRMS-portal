@@ -25,7 +25,7 @@ export const verifyAccessToken = (req:Request,res:Response,next:NextFunction)=>{
   console.log(verifyToken);
   
 
-  if(verifyToken){next()}
+  if(verifyToken){next(verifyToken)}
   else{
     res.status(403).json({msg:"access denied"})
   }

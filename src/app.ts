@@ -1,29 +1,36 @@
 import { config } from "dotenv"
 import express,{ Express, Request, Response, } from "express"
+import path from "path"
+import "reflect-metadata"
+import { dbConnection } from "./config/dbConnection"
 import authRoute from "./routers/authRoute"
 import employeeRoute from "./routers/employeeRoute"
-import "reflect-metadata"
 import departmentRoute from "./routers/departmentRoute"
-import { dbConnection } from "./config/dbConnection"
+import holidayRoute from "./routers/holidayRoute"
+import leaveRoute from "./routers/leaveRoute"
 
+//declaring app
 const app: Express = express()
 config()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
+//template engine setup
+app.set("view engine",'ejs')
+app.set('views', path.join(__dirname, 'views'));
+
+
+//routes
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/employee",employeeRoute)
-app.use("api/v1/department",departmentRoute)
-//Todo:holiday and leave route
+app.use("/api/v1/department",departmentRoute)
+app.use("/api/v1/holiday",holidayRoute)
+app.use("/api/v1/leave",leaveRoute)
 
 
 //databse connection
 dbConnection()
 
-
-app.get("/", (req: Request, res: Response) => {
-  res.json({msg:"Hello World!"})
-})
 
 //JWT secret
 // console.log(require('crypto').randomBytes(64).toString('hex'))
