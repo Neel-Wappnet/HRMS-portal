@@ -1,5 +1,3 @@
-const otpGenerator = ()=>{
-  return Math.random().toFixed(6).split(".")[1]
+export const otpGenerator = ():number=>{
+  return parseInt(Math.random().toFixed(6).split(".")[1])
 }
-
-console.log(otpGenerator())

@@ -66,3 +66,12 @@ model Holiday {
   isOptional Boolean  @default(false)
   status     String
 }
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  otp       Int
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

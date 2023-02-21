@@ -1,32 +1,47 @@
 import * as jwt from "jsonwebtoken";
 import { config } from "dotenv";
-import { NextFunction,Response,Request } from "express";
+import { NextFunction, Response, Request } from "express";
+import { prisma } from "./dbConnection";
 
 config()
 
 //access token generate which take payload and return token
-export const generateAccessToken = (email:string):string=>{
+export const generateAccessToken = (id: number, email: string): string => {
   return jwt.sign({
-    payload:email
+    payload: { id, email }
   },
-  process.env.JWT_SECRET!,
-  {expiresIn:'1d'})
+    process.env.JWT_SECRET!,
+    { expiresIn: '1d' })
 }
 
+
 //verify the access token for user authorization
-export const verifyAccessToken = (req:Request,res:Response,next:NextFunction)=>{
-  
+export const verifyAccessToken = async (req: Request, res: Response, next: NextFunction) => {
+
   const authHeader = req.headers['authorization']
-  const token =  authHeader!.split(' ')[1]
+  const token = authHeader!.split(' ')[1]
 
-  if(!token) res.status(401).json({msg:"empty authorization token"})
+  if (!token) res.status(401).json({
+    status: false,
+    msg: "empty authorization token"
+  })
 
-  const verifyToken = jwt.verify(token,process.env.JWT_SECRET!)
-  console.log(verifyToken);
-  
+  const verifyToken = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload
+  const { email } = verifyToken.payload
 
-  if(verifyToken){next(verifyToken)}
-  else{
-    res.status(403).json({msg:"access denied"})
+  const findUser = await prisma.user.findUnique({
+    where: {
+      email
+    }
+  })
+  if (!findUser)return  res.status(404).json({ msg: "user is not exist..!!" })
+
+  const {password,...userData} = findUser
+
+  if (verifyToken) {
+    req.body.user = userData
+    next()
+  } else {
+    res.status(403).json({ msg: "access denied" })
   }
 }

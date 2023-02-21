@@ -8,8 +8,11 @@ router.route("/login").post(authController.login)
 
 router.route("/logout").post(authController.logout)
 
-router.route("/changepassword").post(verifyAccessToken,authController.changePassword)
-
 router.route("/forgotpassword").post(authController.forgotPassword)
+
+router.route("/forgotpassword/newpassword").post(authController.newPassword)
+
+
+
 
 export default router

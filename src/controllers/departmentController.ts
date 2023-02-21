@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 export const departmentController = {
   addDepartment: async (req: Request, res: Response): Promise<void> => {
     // Todo:check that user is super admin then check all detail and save to database
-    res.end()
   },
   updateDepartment: async (req: Request, res: Response): Promise<void> => {
     //Todo: check that user is super admin then check all detail and update and save to database

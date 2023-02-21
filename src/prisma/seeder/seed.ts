@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { randomPassword } from '../../middleware/randomPassword';
+// import { randomPassword } from '../../middleware/randomPassword';
 import { hashPassword } from '../../middleware/hashPassword';
 const prisma = new PrismaClient()
 
@@ -8,7 +8,7 @@ const main = async ():Promise<void> => {
     data: {
       employeeId:null,
       email: "superadmin@gmail.com",
-      password: await hashPassword.hash(randomPassword()),
+      password: await hashPassword.hash("123456"),
     }
   })
   console.log(superAdmin)
