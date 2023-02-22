@@ -19,12 +19,12 @@ export const generateAccessToken = (id: number, email: string): string => {
 export const verifyAccessToken = async (req: Request, res: Response, next: NextFunction) => {
 
   const authHeader = req.headers['authorization']
-  const token = authHeader!.split(' ')[1]
-
-  if (!token) res.status(401).json({
+  
+  if (!authHeader) return res.status(401).json({
     status: false,
     msg: "empty authorization token"
   })
+  const token = authHeader.split(' ')[1]
 
   const verifyToken = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload
   const { email } = verifyToken.payload
@@ -34,9 +34,9 @@ export const verifyAccessToken = async (req: Request, res: Response, next: NextF
       email
     }
   })
-  if (!findUser)return  res.status(404).json({ msg: "user is not exist..!!" })
+  if (!findUser) return res.status(404).json({ msg: "user is not exist..!!" })
 
-  const {password,...userData} = findUser
+  const { password, ...userData } = findUser
 
   if (verifyToken) {
     req.body.user = userData

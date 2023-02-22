@@ -4,12 +4,12 @@ import { hashPassword } from "../middleware/hashPassword"
 
 export const userController = {
   changePassword: async (req: Request, res: Response): Promise<Response> => {
-    const {oldPassword,newPassword,confirmPassword,userEmail} = req.body
+    const {oldPassword,newPassword,confirmPassword,user} = req.body
 
     
     const findUser = await prisma.user.findUnique({
       where:{
-        email:userEmail
+        email:user.email
       }
     })
 
@@ -36,7 +36,7 @@ export const userController = {
 
     await prisma.user.update({
       where: {
-        email:userEmail
+        email:user.email
       },
       data:{
         password:hashPass
