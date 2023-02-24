@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../config/dbConnection";
 import { uploadImage } from "../config/cloudinary";
-import { stringToDate } from "../middleware/stringToDate";
+import {dateFormation } from '../middleware/dateTranformation';
 import { randomPassword } from '../middleware/randomPassword';
 import { hashPassword } from "../middleware/hashPassword";
 import { sendMail } from "../config/sendMail";
@@ -66,7 +66,7 @@ export const employeeController = {
         departmentId,
         role,
         designation,
-        birthDate: stringToDate(birthDate),
+        birthDate: dateFormation(birthDate),
         reportingUser,
         contactNo,
         address
@@ -153,7 +153,7 @@ export const employeeController = {
         departmentId,
         role,
         designation,
-        birthDate: stringToDate(birthDate),
+        birthDate: dateFormation(birthDate),
         reportingUser,
         contactNo,
         address
