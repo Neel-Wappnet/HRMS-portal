@@ -24,7 +24,7 @@ model Employee {
   birthDate     DateTime
   reportingUser String
   profileImage  String
-  contactNo     BigInt
+  contactNo     String
   address       String
   department    Department?  @relation(fields: [departmentId], references: [id])
   leave         Leave[]

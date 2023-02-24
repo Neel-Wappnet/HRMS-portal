@@ -93,12 +93,12 @@ export const departmentController = {
 
   getAllDepartment: async (req: Request, res: Response): Promise<Response> => {
 
-    const users = await prisma.department.findMany()
+    const departments= await prisma.department.findMany()
     return res.status(200).json({
       status:true,
       msg:"all departments",
       data:{
-        users
+        departments
       }
     })
 

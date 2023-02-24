@@ -10,7 +10,7 @@ const router = Router()
 //only super admin can add and update it
 
 router.route("/addemployee").post(verifyAccessToken,validation.superAdmin,upload.single('profileImage'), employeeController.addEmployee)
-router.route("/updateemployee").patch(verifyAccessToken,validation.superAdmin, employeeController.updateEmployee)
+router.route("/updateemployee/:id").put(verifyAccessToken,validation.superAdmin,upload.single('profileImage'), employeeController.updateEmployee)
 router.route("/deleteemployee").delete(verifyAccessToken,validation.superAdmin, employeeController.deleteEmployee)
 router.route("/getallemployee").get(verifyAccessToken,validation.superAdmin, employeeController.getAllEmployee)
 router.route("/getemployee/:id").get(verifyAccessToken, employeeController.getEmployee)

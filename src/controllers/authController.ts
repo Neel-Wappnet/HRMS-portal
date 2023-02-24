@@ -12,7 +12,7 @@ const authController = {
     const { email, password } = req.body
 
     //check that feilds are not empty
-    if (!(email && password)) return res.json({
+    if (!(email && password)) return res.status(400).json({
       status: false,
       msg: "all fields are required"
     })
