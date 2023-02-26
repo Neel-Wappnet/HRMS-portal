@@ -32,12 +32,12 @@ export const departmentController = {
   },
 
   updateDepartment: async (req: Request, res: Response): Promise<Response> => {
-    const { id } = req.params
+    const id = parseInt(req.params.id)
     const { deptName } = req.body
 
     const findDepartment = await prisma.department.findUnique({
       where: {
-        id:parseInt(id)
+        id
       }
     })
 
@@ -49,26 +49,26 @@ export const departmentController = {
     } else {
       await prisma.department.update({
         where: {
-          id: parseInt(id)
+          id
         },
         data: {
           deptName
         }
       })
       return res.status(200).json({
-        status:true,
-        msg:"department updated successfully"
+        status: true,
+        msg: "department updated successfully"
       })
     }
   },
 
   deleteDepartment: async (req: Request, res: Response): Promise<Response> => {
 
-    const { id } = req.params
+    const id = parseInt(req.params.id)
 
     const findDepartment = await prisma.department.findUnique({
       where: {
-        id: parseInt(id)
+        id
       }
     })
 
@@ -79,13 +79,13 @@ export const departmentController = {
       })
     } else {
       await prisma.department.delete({
-        where:{
-          id:id as unknown as number
+        where: {
+          id: id as unknown as number
         }
       })
       return res.status(200).json({
-        status:true,
-        msg:"department deleted successfully"
+        status: true,
+        msg: "department deleted successfully"
       })
     }
 
@@ -93,23 +93,23 @@ export const departmentController = {
 
   getAllDepartment: async (req: Request, res: Response): Promise<Response> => {
 
-    const departments= await prisma.department.findMany()
+    const departments = await prisma.department.findMany()
     return res.status(200).json({
-      status:true,
-      msg:"all departments",
-      data:{
+      status: true,
+      msg: "all departments",
+      data: {
         departments
       }
     })
 
   },
-  
+
   getDepartment: async (req: Request, res: Response): Promise<Response> => {
-    const { id } = req.params
+    const id = parseInt(req.params.id)
 
     const findDepartment = await prisma.department.findUnique({
       where: {
-        id: id as unknown as number
+        id
       }
     })
 
@@ -120,9 +120,9 @@ export const departmentController = {
       })
     } else {
       return res.status(200).json({
-        status:true,
-        msg:"department info",
-        data:{
+        status: true,
+        msg: "department info",
+        data: {
           findDepartment
         }
       })

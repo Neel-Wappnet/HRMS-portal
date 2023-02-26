@@ -54,7 +54,7 @@ model Leave {
   startDate   String
   endDate     String
   leaveReason String
-  approved    Boolean
+  approved    Boolean @default(false)
   employee    Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
 

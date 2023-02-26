@@ -4,8 +4,6 @@ import { verifyAccessToken } from "../config/jwtToken";
 
 const router = Router()
 
-// all employee can add leave so that only token need to check
-
 router.route("/addLeave").post(verifyAccessToken, leaveController.addLeave)
 router.route("/updateLeave/:id").patch(verifyAccessToken, leaveController.updateLeave)
 router.route("/deleteLeave/:id").delete(verifyAccessToken, leaveController.deleteLeave)

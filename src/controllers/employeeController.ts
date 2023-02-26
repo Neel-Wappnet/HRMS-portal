@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../config/dbConnection";
 import { uploadImage } from "../config/cloudinary";
-import {dateFormation } from '../middleware/dateTranformation';
+import { dateFormation } from '../middleware/dateTranformation';
 import { randomPassword } from '../middleware/randomPassword';
 import { hashPassword } from "../middleware/hashPassword";
 import { sendMail } from "../config/sendMail";
@@ -176,59 +176,56 @@ export const employeeController = {
       }
     })
 
-    if(!findEmployee){
+    if (!findEmployee) {
       return res.status(400).json({
-        status:false,
-        msg:"employee not exist"
+        status: false,
+        msg: "employee not exist"
       })
     }
 
     const deleteEmployee = await prisma.employee.delete({
-      where:{
+      where: {
         id
       }
     })
 
-    const deleteUser = await prisma.user.delete({
-      where:{
-        email:deleteEmployee.email
-      }
-    })
 
     return res.status(200).json({
-      status:true,
-      msg:"employee deleted successfully"
+      status: true,
+      msg: "employee deleted successfully",
+      data: { deleteEmployee }
     })
 
   },
+
   getAllEmployee: async (req: Request, res: Response): Promise<void> => {
     const employees = await prisma.employee.findMany()
 
     res.status(200).json({
-      status:true,
-      msg:"Employees details",
-      data:{employees}
+      status: true,
+      msg: "Employees details",
+      data: { employees }
     })
   },
-  getEmployee: async (req: Request, res: Response): Promise<Response|void> => {
+  getEmployee: async (req: Request, res: Response): Promise<Response | void> => {
     const id = parseInt(req.params.id)
 
     const findEmployee = await prisma.employee.findUnique({
-      where:{
+      where: {
         id
       }
     })
-    if(!findEmployee){
+    if (!findEmployee) {
       return res.status(400).json({
-        status:false,
-        msg:"employee is not exist"
+        status: false,
+        msg: "employee is not exist"
       })
     }
-    
+
     return res.status(200).json({
-      status:true,
-      msg:"user details",
-      data:{
+      status: true,
+      msg: "user details",
+      data: {
         findEmployee
       }
     })

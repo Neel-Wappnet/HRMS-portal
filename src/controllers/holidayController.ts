@@ -37,7 +37,7 @@ export const holidayController = {
       }
     })
 
-    const holidays = findHoliday.filter(h => h.startDate.getFullYear() === new Date().getFullYear() && h.title.toLocaleLowerCase() == title.toLocaleLowerCase())
+    const holidays = findHoliday.filter(h => new Date(h.startDate).getFullYear() === new Date().getFullYear() && h.title.toLocaleLowerCase() == title.toLocaleLowerCase())
 
     if (holidays.length) {
       return res.status(223).json({
