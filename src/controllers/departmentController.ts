@@ -63,7 +63,6 @@ export const departmentController = {
   },
 
   deleteDepartment: async (req: Request, res: Response): Promise<Response> => {
-
     const id = parseInt(req.params.id)
 
     const findDepartment = await prisma.department.findUnique({
@@ -92,7 +91,6 @@ export const departmentController = {
   },
 
   getAllDepartment: async (req: Request, res: Response): Promise<Response> => {
-
     const departments = await prisma.department.findMany()
     return res.status(200).json({
       status: true,
@@ -101,7 +99,6 @@ export const departmentController = {
         departments
       }
     })
-
   },
 
   getDepartment: async (req: Request, res: Response): Promise<Response> => {

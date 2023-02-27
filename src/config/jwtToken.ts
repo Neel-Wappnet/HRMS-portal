@@ -19,7 +19,7 @@ export const generateAccessToken = (id: number, email: string): string => {
 export const verifyAccessToken = async (req: Request, res: Response, next: NextFunction) => {
 
   const authHeader = req.headers['authorization']
-  
+
   if (!authHeader) return res.status(401).json({
     status: false,
     msg: "empty authorization token"

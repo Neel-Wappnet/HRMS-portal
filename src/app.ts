@@ -1,5 +1,5 @@
 import { config } from "dotenv"
-import express, { Express, Request, Response, } from "express"
+import express, { Express } from "express"
 import path from "path"
 import morgon from "morgan"
 import "reflect-metadata"

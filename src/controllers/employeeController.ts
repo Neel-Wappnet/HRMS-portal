@@ -12,7 +12,6 @@ export const employeeController = {
   addEmployee: async (req: Request, res: Response): Promise<Response> => {
 
     const data = JSON.parse(req.body.data)
-
     const { empCode, name, email, departmentId, role, designation, birthDate, reportingUser, contactNo, address } = data
 
     if (!(empCode && name && email && departmentId && role && designation && birthDate && reportingUser && contactNo && address)) {
@@ -55,7 +54,6 @@ export const employeeController = {
       })
     }
     const uploadedImage = await uploadImage(req.file!.path)
-    // console.log(uploadedImage.secure_url)
 
     const addEmployee = await prisma.employee.create({
       data: {
@@ -91,8 +89,6 @@ export const employeeController = {
       msg: "Employee added successfully",
       data: { addEmployee }
     })
-
-
   },
   updateEmployee: async (req: Request, res: Response): Promise<Response> => {
     const data = JSON.parse(req.body.data)
@@ -189,13 +185,11 @@ export const employeeController = {
       }
     })
 
-
     return res.status(200).json({
       status: true,
       msg: "employee deleted successfully",
       data: { deleteEmployee }
     })
-
   },
 
   getAllEmployee: async (req: Request, res: Response): Promise<void> => {

@@ -36,7 +36,6 @@ export const leaveController = {
     })
 
     const leaves = findleaves.filter(l => l.subject.toUpperCase() === subject.toUpperCase() && new Date(l.startDate).getFullYear() === new Date().getFullYear())
-    console.log(leaves)
 
     const findEmployee = await prisma.employee.findUnique({
       where: {
@@ -73,8 +72,6 @@ export const leaveController = {
         employeeId: findEmployee.id
       }
     })
-    // console.log(12 - dateDifferance(start, end))
-
 
     if (!findLeaveMaster) {
       const leaveBalance = 12 - dateDifferance(start, end)
@@ -86,6 +83,13 @@ export const leaveController = {
       })
     } else {
       const leaveBalance = findLeaveMaster.leaveBalance - dateDifferance(start, end)
+
+      if (leaveBalance <= 0) {
+        return res.status(400).json({
+          status: false,
+          msg: "your leave balance is insufficient"
+        })
+      }
       const updateLeaveMaster = await prisma.leaveMaster.update({
         where: {
           employeeId: findEmployee.id
@@ -165,16 +169,23 @@ export const leaveController = {
         msg: "leave master is not found"
       })
     }
+    const leaveBalance = findLeaveMaster.leaveBalance + dateDifferance(findLeave.startDate, findLeave.endDate) - dateDifferance(start, end)
+
+    if (leaveBalance <= 0) {
+      return res.status(400).json({
+        status: false,
+        msg: "your leave balance is insufficient"
+      })
+    }
 
     const updateLeaveMaster = await prisma.leaveMaster.update({
       where: {
         employeeId: findLeaveMaster.id
       },
       data: {
-        leaveBalance: findLeaveMaster.leaveBalance + dateDifferance(findLeave.startDate, findLeave.endDate) - dateDifferance(start, end)
+        leaveBalance
       }
     })
-
 
     return res.status(200).json({
       status: true,
@@ -211,8 +222,6 @@ export const leaveController = {
         msg: "leave master is not found"
       })
     }
-
-
 
     const deleteLeave = await prisma.leave.delete({
       where: {

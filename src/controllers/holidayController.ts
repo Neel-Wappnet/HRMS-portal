@@ -5,7 +5,6 @@ import { dateFormation } from '../middleware/dateTranformation';
 
 export const holidayController = {
 
-
   addHoliday: async (req: Request, res: Response): Promise<Response> => {
     const { title, startDate, endDate, isOptional, status } = req.body
 
@@ -32,8 +31,8 @@ export const holidayController = {
     const findHoliday = await prisma.holiday.findMany({
       where: {
         title,
-        startDate:start,
-        endDate:end
+        startDate: start,
+        endDate: end
       }
     })
 
@@ -68,7 +67,6 @@ export const holidayController = {
       msg: "holiday added successfully",
       data: { createHoliday }
     })
-
   },
 
   updateHoliday: async (req: Request, res: Response): Promise<Response> => {
@@ -114,8 +112,8 @@ export const holidayController = {
       },
       data: {
         title,
-        startDate:start,
-        endDate:end,
+        startDate: start,
+        endDate: end,
         isOptional,
         status
       }
@@ -127,7 +125,7 @@ export const holidayController = {
       data: { updateHoliday }
     })
   },
-  
+
   deleteHoliday: async (req: Request, res: Response): Promise<Response> => {
     const id = parseInt(req.params.id)
 

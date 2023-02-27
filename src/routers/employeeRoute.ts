@@ -7,8 +7,6 @@ const imageUpload = upload.single('profileImage')
 
 const router = Router()
 
-//only super admin can add and update it
-
 router.route("/addemployee").post(verifyAccessToken, validation.superAdmin, upload.single('profileImage'), employeeController.addEmployee)
 router.route("/updateemployee/:id").put(verifyAccessToken, validation.superAdmin, upload.single('profileImage'), employeeController.updateEmployee)
 router.route("/deleteemployee/:id").delete(verifyAccessToken, validation.superAdmin, employeeController.deleteEmployee)

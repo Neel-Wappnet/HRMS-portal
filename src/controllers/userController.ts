@@ -6,7 +6,6 @@ export const userController = {
   changePassword: async (req: Request, res: Response): Promise<Response> => {
     const { oldPassword, newPassword, confirmPassword, user } = req.body
 
-
     const findUser = await prisma.user.findUnique({
       where: {
         email: user.email
